@@ -2,15 +2,14 @@ import { useStore } from "@tanstack/react-store";
 import { createContext } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { Snippet, store } from "../stores/data-store";
-import { javascript } from '@codemirror/lang-javascript';
 
 interface AppContextValue {
     language: string | undefined;
     setLanguage: (language: string) => void;
     category: string | undefined;
     setCategory: (category: string) => void;
-    snippet: { name: string } & Snippet | undefined;
-    setSnippet: (snippet: { name: string } & Snippet | undefined) => void;
+    snippet: ({ name: string } & Snippet) | undefined;
+    setSnippet: (snippet: ({ name: string } & Snippet) | undefined) => void;
 }
 
 const AppContext = createContext<AppContextValue>({
@@ -35,10 +34,9 @@ const AppContextProvider = ({ children }: AppContextProviderProps) => {
         "selected-category",
         undefined
     );
-    const [snippet, setSnippet] = useLocalStorage<{ name: string } & Snippet | undefined>(
-        "selected-snippet",
-        undefined
-    );
+    const [snippet, setSnippet] = useLocalStorage<
+        ({ name: string } & Snippet) | undefined
+    >("selected-snippet", undefined);
     const dataStore = useStore(store);
 
     const setLanguage = (language: string) => {
