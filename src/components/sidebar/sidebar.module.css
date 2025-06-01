@@ -1,0 +1,72 @@
+.container {
+    display: flex;
+    flex-direction: column;
+
+    width: 250px;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.snippet-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.snippet-item:hover {
+    background-color: #f0f0f0;
+}
+
+.snippet-item.selected {
+    border-right: 4px solid var(--primary-color);
+}
+
+/* Add snipet form */
+.add-snippet-button {
+    margin: 8px;
+}
+
+.add-dialog {
+    width: 300px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 8px;
+}
+
+.add-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.dialog-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-field input:user-invalid {
+    color: red;
+    border: 2px solid red;
+}
+
+.form-actions {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 4px;
+}

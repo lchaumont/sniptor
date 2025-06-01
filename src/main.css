@@ -1,3 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+    --primary-color: #007ccf;
+}
+
+body {
+    margin: 0;
+}
+
+.app {
+    display: flex;
+    flex-direction: row;
+}
+
+main {
+    flex: 1;
+    overflow: auto;
+}

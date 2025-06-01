@@ -1,31 +1,17 @@
-import { useEffect } from "react";
-import { themeChange } from "theme-change";
-import { AppContextProvider } from "./components/app-context";
-import CategorySelector from "./components/category-selector";
-import LanguageSelector from "./components/language-selector";
-import SnippetList from "./components/snippet-list";
+import Sidebar from "./components/sidebar/sidebar";
+import {SnippetContextProvider} from "./components/snippet-context/snippet-context";
+import SnippetMain from "./components/snippet-main/snippet-main";
 
 const App = () => {
-    useEffect(() => {
-        themeChange(false);
-    }, []);
-
     return (
-        <AppContextProvider>
-            <div className="container mx-auto my-12">
-                <div className="flex flex-row gap-8">
-                    <div className="flex flex-col gap-4 min-w-96">
-                        <LanguageSelector />
-                        <CategorySelector />
-                    </div>
-                    <div className="flex-1">
-                        <SnippetList />
-                    </div>
-                </div>
+        <SnippetContextProvider>
+            <div className="app">
+                <Sidebar />
+                <main>
+                    <SnippetMain />
+                </main>
             </div>
-
-            <div id="modal-root" />
-        </AppContextProvider>
+        </SnippetContextProvider>
     );
 };
 

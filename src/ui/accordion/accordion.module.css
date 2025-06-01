@@ -1,0 +1,32 @@
+.accordion-container {
+}
+
+.accordion-trigger {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.accordion-trigger:hover {
+    background-color: #f0f0f0;
+}
+
+.accordion-content {
+    transition: height 0.2s ease-in-out;
+    overflow: hidden;
+}
+
+.chevron-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease-in-out;
+    transform: rotate(-90deg);
+}
+
+.chevron-icon.active {
+    transform: rotate(0deg);
+}
