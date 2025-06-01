@@ -1,27 +1,24 @@
 import {langs, LanguageName} from "@uiw/codemirror-extensions-langs";
 import ReactCodeMirror from "@uiw/react-codemirror";
-import {useState} from "react";
+import {useDebounceCallback} from "usehooks-ts";
+import {useSnippets} from "../../hooks/useSnippets";
 import {Snippet} from "../../types/snippet";
 import Label from "../../ui/label/label";
 import {useSelectedSnippet} from "../snippet-context/snippet-context";
 import css from "./snippet-main.module.css";
-import {useDebounceCallback} from "usehooks-ts";
-import { useSnippets } from "../../hooks/useSnippets";
 
 const SnippetViewer = ({snippet}: {snippet: Snippet}) => {
-    const { setSelectedSnippet } = useSelectedSnippet();
-    const { updateSnippet } = useSnippets();
-    const [localContent, setLocalContent] = useState<string>(snippet.content);
+    const {setSelectedSnippet} = useSelectedSnippet();
+    const {updateSnippet} = useSnippets();
+
     const debounced = useDebounceCallback(async (value: string) => {
-        const updated = await updateSnippet(snippet.id, {
+        updateSnippet(snippet.id, {
             ...snippet,
             content: value,
-        });
-
-        if (updated) {
+        }).then(updated => {
             setSelectedSnippet(updated);
-        };
-    }, 500)
+        });
+    }, 2000);
 
     const createdAt = new Date(snippet.createdAt);
     const updatedAt = new Date(snippet.updatedAt);
@@ -32,11 +29,6 @@ const SnippetViewer = ({snippet}: {snippet: Snippet}) => {
         languageExtension.push(langs[category as LanguageName]());
     }
 
-    const onChange = (value: string): void => {
-        setLocalContent(value);
-        debounced(value);
-    };
-
     return (
         <div className={css["container"]}>
             <div className={css["header"]}>
@@ -45,7 +37,7 @@ const SnippetViewer = ({snippet}: {snippet: Snippet}) => {
             </div>
 
             <div className={css["editor-container"]}>
-                <ReactCodeMirror value={localContent} readOnly={false} extensions={languageExtension} onChange={onChange} />
+                <ReactCodeMirror value={snippet.content} readOnly={false} extensions={languageExtension} onChange={debounced} />
             </div>
 
             <div className={css["metadata"]}>

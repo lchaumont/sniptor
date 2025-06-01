@@ -36,7 +36,7 @@ const Sidebar = () => {
         const category = formData.get("category") as string;
 
         createSnippet({title, category, content: ""})
-            .then((newSnippet) => {
+            .then(newSnippet => {
                 selectSnippetById(newSnippet.id, [...snippets, newSnippet]);
                 closeAddDialog();
             })
