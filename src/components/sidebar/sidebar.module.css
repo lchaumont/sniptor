@@ -10,9 +10,18 @@
 }
 
 .snippet-item {
-    padding: 8px 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2px 6px 2px 8px;
+
     cursor: pointer;
     transition: background-color 0.2s ease;
+}
+
+.snippet-item > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .snippet-item:hover {
@@ -20,7 +29,33 @@
 }
 
 .snippet-item.selected {
+    padding-right: 2px;
     border-right: 4px solid var(--primary-color);
+}
+
+.snippet-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+    margin-left: auto;
+}
+
+.snippet-action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.snippet-action-button:hover {
+    background-color: #c8c8c8;
+    border-radius: 4px;
+}
+
+.snippet-action-button svg {
+    width: 16px;
+    height: 16px;
 }
 
 /* Add snipet form */

@@ -4,6 +4,7 @@ import Accordion from "../../ui/accordion/accordion";
 import Button from "../../ui/button/button";
 import {useSelectedSnippet} from "../snippet-context/snippet-context";
 import css from "./sidebar.module.css";
+import SnippetItem from "./snippet-item";
 
 const Sidebar = () => {
     const {snippets, createSnippet} = useSnippets();
@@ -50,14 +51,9 @@ const Sidebar = () => {
             {Object.entries(groupByCategories).map(([category, snippetItems]) => {
                 return (
                     <Accordion key={category} title={category}>
-                        {snippetItems.map(({title, id}) => {
-                            const isSelected = selectedSnippet?.id === id;
-                            return (
-                                <div key={id} className={`${css["snippet-item"]} ${isSelected ? css["selected"] : ""}`} onClick={() => handleSnippetClick(id)}>
-                                    {title}
-                                </div>
-                            );
-                        })}
+                        {snippetItems.map(({title, id}) => (
+                            <SnippetItem key={id} title={title} isSelected={selectedSnippet?.id === id} onRowClick={() => handleSnippetClick(id)} onEditClick={() => {}} onDeleteClick={() => {}} />
+                        ))}
                     </Accordion>
                 );
             })}
