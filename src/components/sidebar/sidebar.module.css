@@ -14,6 +14,7 @@
     flex-direction: row;
     align-items: center;
     padding: 2px 6px 2px 8px;
+    height: 28px;
 
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -104,4 +105,42 @@
     flex-direction: row;
     justify-content: end;
     gap: 4px;
+}
+
+.edit-dialog,
+.delete-dialog {
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 90vw;
+}
+
+.edit-dialog::backdrop,
+.delete-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+.edit-form,
+.delete-content {
+    padding: 24px;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.delete-message {
+    margin: 16px 0 24px 0;
+    color: var(--text-secondary, #666666);
+    line-height: 1.5;
+}
+
+.delete-button {
+    background-color: var(--error-color, #f44336) !important;
+    color: white !important;
+}
+
+.delete-button:hover {
+    background-color: var(--error-hover, #d32f2f) !important;
 }

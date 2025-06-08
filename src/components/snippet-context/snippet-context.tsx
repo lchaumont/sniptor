@@ -1,10 +1,18 @@
 import React, {createContext, ReactNode, useContext, useState} from "react";
+import {useSnippets} from "../../hooks/useSnippets";
 import {Snippet} from "../../types/snippet";
 
 interface SnippetContextType {
     selectedSnippet: Snippet | null;
-    setSelectedSnippet: (snippet: Snippet | null) => void;
-    selectSnippetById: (id: string, snippets: Snippet[]) => void;
+    snippets: Snippet[];
+    loading: boolean;
+    error: string | null;
+    clearSelectedSnippet: () => void;
+    setSelectedSnippet: (id: string) => void;
+    createSnippet: (snippet: Omit<Snippet, "id" | "createdAt" | "updatedAt">) => Promise<Snippet>;
+    updateSnippet: (id: string, updates: Partial<Omit<Snippet, "id" | "createdAt">>) => Promise<Snippet | null>;
+    deleteSnippet: (id: string) => Promise<boolean>;
+    refreshSnippets: () => Promise<void>;
 }
 
 const SnippetContext = createContext<SnippetContextType | undefined>(undefined);
@@ -14,27 +22,35 @@ interface SnippetContextProviderProps {
 }
 
 export const SnippetContextProvider: React.FC<SnippetContextProviderProps> = ({children}) => {
-    const [selectedSnippet, setSelectedSnippet] = useState<Snippet | null>(null);
+    const [selectedSnippet, setSelectedSnippet] = useState<string | null>(null);
 
-    const selectSnippetById = (id: string, snippets: Snippet[]) => {
-        const snippet = snippets.find(s => s.id === id);
-        setSelectedSnippet(snippet || null);
-    };
+    // Single instance of useSnippets - this is the source of truth
+    const snippetsHook = useSnippets();
+
+    const selectedSnippetObject = selectedSnippet ? snippetsHook.snippets.find(snippet => snippet.id === selectedSnippet) || null : null;
 
     const value: SnippetContextType = {
-        selectedSnippet,
+        selectedSnippet: selectedSnippetObject,
+        clearSelectedSnippet: () => setSelectedSnippet(null),
         setSelectedSnippet,
-        selectSnippetById,
+        // Expose all snippet operations from the single hook instance
+        snippets: snippetsHook.snippets,
+        loading: snippetsHook.loading,
+        error: snippetsHook.error,
+        createSnippet: snippetsHook.createSnippet,
+        updateSnippet: snippetsHook.updateSnippet,
+        deleteSnippet: snippetsHook.deleteSnippet,
+        refreshSnippets: snippetsHook.refreshSnippets,
     };
 
     return <SnippetContext.Provider value={value}>{children}</SnippetContext.Provider>;
 };
 
-export const useSelectedSnippet = (): SnippetContextType => {
+export const useSnippetContext = (): SnippetContextType => {
     const context = useContext(SnippetContext);
 
     if (context === undefined) {
-        throw new Error("useSelectedSnippet must be used within a SnippetContextProvider");
+        throw new Error("useSnippetContext must be used within a SnippetContextProvider");
     }
 
     return context;

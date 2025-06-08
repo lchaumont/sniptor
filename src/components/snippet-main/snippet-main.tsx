@@ -1,22 +1,20 @@
 import {langs, LanguageName} from "@uiw/codemirror-extensions-langs";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import {useDebounceCallback} from "usehooks-ts";
-import {useSnippets} from "../../hooks/useSnippets";
 import {Snippet} from "../../types/snippet";
 import Label from "../../ui/label/label";
-import {useSelectedSnippet} from "../snippet-context/snippet-context";
+import {useSnippetContext} from "../snippet-context/snippet-context";
 import css from "./snippet-main.module.css";
 
 const SnippetViewer = ({snippet}: {snippet: Snippet}) => {
-    const {setSelectedSnippet} = useSelectedSnippet();
-    const {updateSnippet} = useSnippets();
+    const {setSelectedSnippet, updateSnippet} = useSnippetContext();
 
     const debounced = useDebounceCallback(async (value: string) => {
         updateSnippet(snippet.id, {
             ...snippet,
             content: value,
-        }).then(updated => {
-            setSelectedSnippet(updated);
+        }).then(() => {
+            setSelectedSnippet(snippet.id);
         });
     }, 2000);
 
@@ -49,7 +47,7 @@ const SnippetViewer = ({snippet}: {snippet: Snippet}) => {
 };
 
 const SnippetMain = () => {
-    const {selectedSnippet} = useSelectedSnippet();
+    const {selectedSnippet} = useSnippetContext();
 
     if (!selectedSnippet) {
         return (
@@ -59,7 +57,7 @@ const SnippetMain = () => {
         );
     }
 
-    return <SnippetViewer snippet={selectedSnippet} />;
+    return <SnippetViewer key={selectedSnippet.id} snippet={selectedSnippet} />;
 };
 
 export default SnippetMain;

@@ -33,7 +33,6 @@ export const useSnippets = () => {
     };
 
     const updateSnippet = async (id: string, updates: Partial<Omit<Snippet, "id" | "createdAt">>) => {
-        console.log("Updating snippet with ID:", id, "Updates:", updates);
         try {
             const updatedSnippet = await SnippetStorage.updateSnippet(id, updates);
             if (updatedSnippet) {
@@ -70,6 +69,6 @@ export const useSnippets = () => {
         createSnippet,
         updateSnippet,
         deleteSnippet,
-        refreshSnippets: loadSnippets,
+        refreshSnippets: loadSnippets
     };
 };
