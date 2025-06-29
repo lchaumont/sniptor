@@ -1,9 +1,30 @@
 :root {
-    --primary-color: #007ccf;
+    --background-color: #303030;
+    --sidebar-background-color: #232323;
+
+    --text-color: #dcdcdc;
+
+    --primary-color: #f59e0b;
+    --primary-contrast-text-color: #000000;
+
+    --secondary-color: #0B62F5;
+    --secondary-contrast-text-color: #ffffff;
+
+    --success-color: #4caf50;
+    --success-contrast-text-color: #ffffff;
+
+    --warning-color: #ff9800;
+    --warning-contrast-text-color: #ffffff;
+
+    --danger-color: #f44336;
+    --danger-contrast-text-color: #ffffff;
+
+    --metadata-color: #9f9f9f;
 }
 
 body {
     margin: 0;
+    background-color: var(--background-color);
 }
 
 .app {

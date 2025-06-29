@@ -3,6 +3,7 @@
 import {useRef, useState} from "react";
 import css from "./accordion.module.css";
 import Chevron from "./chevron.svg?react";
+import clsx from "clsx";
 
 type AccordionProps = {
     title: string;
@@ -15,12 +16,12 @@ const Accordion = ({title, children}: AccordionProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const toogle = () => setIsOpen(current => !current);
 
-    const chevronClass = isOpen ? `${css["chevron-icon"]} ${css["active"]}` : css["chevron-icon"];
+    const chevronClasses = clsx(css["chevron-icon"], isOpen && css["active"]);
 
     return (
         <div className={css["accordion-container"]}>
             <div className={css["accordion-trigger"]} onClick={toogle}>
-                <Chevron className={chevronClass} />
+                <Chevron className={chevronClasses} />
                 {title}
             </div>
             <div ref={contentHeight} className={css["accordion-content"]} style={isOpen && contentHeight.current ? {height: contentHeight.current.scrollHeight} : {height: "0px"}}>

@@ -160,10 +160,10 @@ const Sidebar = () => {
                     </div>
 
                     <div className={css["form-actions"]}>
-                        <Button type="button" onClick={closeAddDialog}>
+                        <Button type="button" onClick={closeAddDialog} inverted>
                             Cancel
                         </Button>
-                        <Button type="submit">Confirm</Button>
+                        <Button type="submit" variant="success">Confirm</Button>
                     </div>
                 </form>
             </dialog>
@@ -199,10 +199,10 @@ const Sidebar = () => {
                     </div>
 
                     <div className={css["form-actions"]}>
-                        <Button type="button" onClick={closeEditDialog}>
+                        <Button type="button" onClick={closeEditDialog} inverted>
                             Cancel
                         </Button>
-                        <Button type="submit">Save Changes</Button>
+                        <Button type="submit" variant="success">Save Changes</Button>
                     </div>
                 </form>
             </dialog>
@@ -213,10 +213,10 @@ const Sidebar = () => {
                     <h4 className={css["dialog-title"]}>Delete Snippet</h4>
                     <p className={css["delete-message"]}>Are you sure you want to delete "{deletingSnippet?.title}"? This action cannot be undone.</p>
                     <div className={css["form-actions"]}>
-                        <Button type="button" onClick={closeDeleteDialog}>
+                        <Button type="button" inverted onClick={closeDeleteDialog}>
                             Cancel
                         </Button>
-                        <Button type="button" onClick={handleDeleteSnippet} className={css["delete-button"]}>
+                        <Button type="button" variant="danger" onClick={handleDeleteSnippet} className={css["delete-button"]}>
                             Delete
                         </Button>
                     </div>
